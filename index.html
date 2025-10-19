@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Color Palette Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-900 text-white">
+    <div class="background-gradient"></div>
+
+    <main class="container mx-auto p-4 flex flex-col items-center justify-center min-h-screen">
+        <div class="glass-container w-full max-w-6xl">
+            <header class="flex justify-between items-center p-6">
+                <h1 class="text-3xl font-bold tracking-wider">Color Palette Generator</h1>
+                <button id="generate-btn" class="btn-primary">
+                    <span>Generate</span>
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+            </header>
+
+            <div id="palette" class="grid grid-cols-1 md:grid-cols-5 h-[50vh] gap-2 p-6">
+                <!-- Color cards will be dynamically inserted here -->
+            </div>
+
+            <footer class="flex justify-center items-center p-6 space-x-4">
+                <button id="copy-all-btn" class="btn-secondary">
+                    <span>Copy All</span>
+                    <i class="fas fa-copy"></i>
+                </button>
+                <button id="save-palette-btn" class="btn-secondary">
+                    <span>Save Palette</span>
+                    <i class="fas fa-save"></i>
+                </button>
+                 <button id="view-saved-btn" class="btn-secondary">
+                    <span>View Saved</span>
+                    <i class="fas fa-folder-open"></i>
+                </button>
+            </footer>
+        </div>
+    </main>
+
+    <!-- Saved Palettes Modal -->
+    <div id="saved-palettes-modal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
+        <div class="glass-container p-8 rounded-lg max-w-3xl w-full">
+            <h2 class="text-2xl font-bold mb-4">Saved Palettes</h2>
+            <div id="saved-palettes-container" class="grid grid-cols-1 gap-4 max-h-96 overflow-y-auto">
+                <!-- Saved palettes will be injected here -->
+            </div>
+            <button id="close-modal-btn" class="btn-secondary mt-4">Close</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

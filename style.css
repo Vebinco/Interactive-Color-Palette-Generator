@@ -1,0 +1,277 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --bg-dark-start: #0F172A;
+    --bg-dark-end: #1E293B;
+    --glow-1: #00A4E4;
+    --glow-2: #30D5C8;
+    --glow-3: #9333EA;
+    --text-primary: #E2E8F0;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-dark-start);
+    color: var(--text-primary);
+    overflow: hidden;
+}
+
+.background-gradient {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: linear-gradient(135deg, var(--bg-dark-start), var(--bg-dark-end));
+}
+
+.background-gradient::before,
+.background-gradient::after {
+    content: '';
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    filter: blur(80px); /* Reduced blur for performance */
+    opacity: 0.3;
+    z-index: -2;
+    animation: glow-move 30s infinite alternate;
+    will-change: transform; /* Hint for browser optimization */
+}
+
+.background-gradient::before {
+    top: -10%;
+    left: -10%;
+    background-color: var(--glow-1);
+}
+
+.background-gradient::after {
+    bottom: -10%;
+    right: -10%;
+    background-color: var(--glow-3);
+    animation-delay: -15s;
+}
+
+@keyframes glow-move {
+    /* Simplified animation */
+    from { transform: translate(-20%, -20%) scale(1); }
+    to { transform: translate(20%, 20%) scale(1.2); }
+}
+
+.glass-container {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px); /* Reduced blur */
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 2rem;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.btn-primary, .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.btn-primary {
+    background: linear-gradient(90deg, var(--glow-1), var(--glow-2));
+    color: #fff;
+    box-shadow: 0 0 15px rgba(48, 213, 200, 0.5);
+}
+
+.btn-primary:hover {
+    box-shadow: 0 0 30px rgba(48, 213, 200, 0.8);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-primary::before, .btn-secondary::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 150%;
+    height: 150%;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.4s ease;
+}
+
+.btn-primary:active::before, .btn-secondary:active::before {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0;
+    transition: transform 0s, opacity 0.4s;
+}
+
+#palette {
+    display: grid;
+    height: 60vh; /* Give palette a fixed height */
+}
+
+.color-card {
+    position: relative;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.5s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.5rem;
+    cursor: pointer;
+    will-change: transform; /* Hint for browser optimization */
+}
+
+.color-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.color-card .color-info {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    background: rgba(0,0,0,0.3);
+    padding: 1rem;
+    border-radius: 1rem;
+    backdrop-filter: blur(4px); /* Reduced blur */
+    will-change: opacity, transform; /* Hint for browser optimization */
+}
+
+.color-card:hover .color-info {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.color-hex {
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+.card-controls {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.card-controls button {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.card-controls button:hover {
+    transform: scale(1.2);
+}
+
+.copy-tooltip {
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--glow-2);
+    color: #000;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.copy-tooltip.show {
+    opacity: 1;
+    visibility: visible;
+    bottom: 110%;
+}
+
+/* Mobile responsiveness fixes without changing structure */
+@media (max-width: 640px) {
+	body {
+		overflow: auto; /* allow scrolling on small screens */
+	}
+
+	header {
+		padding: 1rem 1.25rem;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.75rem;
+	}
+
+	header h1 {
+		font-size: 1.5rem; /* scale down title */
+	}
+
+	.glass-container {
+		border-radius: 1rem; /* tighter radius on small screens */
+	}
+
+	#palette {
+		height: auto; /* avoid fixed viewport height on mobile */
+		grid-template-columns: 1fr; /* ensure single column */
+		gap: 0.75rem;
+		padding: 1rem 1.25rem; /* match compact spacing */
+	}
+
+	.color-card {
+		min-height: 120px;
+		padding: 1rem;
+		transform: none !important; /* reduce jumpiness on touch */
+	}
+
+	.color-card:hover {
+		transform: none; /* disable hover lift on touch devices */
+	}
+
+	.color-hex {
+		font-size: 1rem;
+	}
+
+	.card-controls {
+		gap: 0.5rem;
+	}
+
+	.btn-primary,
+	.btn-secondary {
+		width: 100%;
+		justify-content: center;
+		padding: 0.75rem 1rem;
+	}
+
+	footer {
+		padding: 1rem 1.25rem;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	/* Lighter/background performance tweaks on small screens */
+	.background-gradient::before,
+	.background-gradient::after {
+		width: 240px;
+		height: 240px;
+		filter: blur(60px);
+	}
+}
